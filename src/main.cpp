@@ -3,16 +3,17 @@ import Interpreter;
 
 static std::string binary_name;
 
-auto runPrompt() -> void;
-auto run(const std::filesystem::path &path) -> void;
+void runPrompt();
+void run(const std::filesystem::path &path);
 
-auto main(int argc, char *argv[]) -> int {
+int main(int argc, char *argv[]) {
   binary_name = argv[0];
   --argc;
 
-  std::println("Notice: Currently fully implemented lexer prototype AST printer");
+  std::println(
+      "Notice: Currently fully implemented lexer prototype AST printer");
   std::println("Testing entrypoint: {} <filename>", binary_name);
-  
+
   if (argc > 1) {
     std::print("Usage: {} [options]\n", binary_name);
     return 1;
@@ -25,7 +26,8 @@ auto main(int argc, char *argv[]) -> int {
   return 0;
 }
 
-auto runPrompt() -> void {
+void runPrompt() {
+  // Placeholder
   while (true) {
     std::print(">>> ");
     std::string input;
@@ -37,13 +39,7 @@ auto runPrompt() -> void {
   }
 }
 
-auto run(const std::filesystem::path &path) -> void {
+void run(const std::filesystem::path &path) {
+  // Current entrypoint for testing
   Lox::runFile(path);
-  // Lexer scanner{source};
-  // auto tokens = scanner.scanTokens();
-  // std::println("Nr. tokens: {}", tokens.size());
-  // for (std::size_t i{0}; i < tokens.size(); ++i) {
-  //   std::cout << tokens[i] << " ";
-  // }
-  // std::cout << '\n';
 }

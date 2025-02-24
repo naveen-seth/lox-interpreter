@@ -7,6 +7,8 @@ import std;
 using namespace token;
 export using LexedTokenList = token::LexedTokenList;
 
+// TODO: Replace error prints with proper logger class
+
 export class Lexer {
  public:
   explicit Lexer(const std::string &source) : m_source{source} {}

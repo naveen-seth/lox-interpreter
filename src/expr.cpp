@@ -14,10 +14,11 @@ using namespace token;
 
 // Slighty modified version of
 // https://www.foonathan.net/2022/05/recursive-variant-box/
-template <typename T> class Box {
+template <typename T>
+class Box {
   std::unique_ptr<T> m_inner;
 
-public:
+ public:
   // Automatic construction from a `T`, not a `T*`.
   Box(T &&obj) : m_inner(new T(std::move(obj))) {}
   Box(const T &obj) : m_inner(new T(obj)) {}
@@ -48,7 +49,8 @@ public:
 // Syntax definition
 export namespace expr {
 
-using Expr = std::variant<struct Literal, Box<struct Unary>, Box<struct Binary>, Box<struct Grouping>>;
+using Expr = std::variant<struct Literal, Box<struct Unary>, Box<struct Binary>,
+                          Box<struct Grouping>>;
 
 struct Literal {
   Token token;
@@ -70,8 +72,8 @@ struct Grouping {
 };
 
 // AST printer
-std::string parenthesize(const std::string &name, std::initializer_list<Expr> exprs);
-
+std::string parenthesize(const std::string &name,
+                         std::initializer_list<Expr> exprs);
 
 [[nodiscard]] std::string formatExpr(const Expr &expr) {
   return std::visit(
@@ -88,8 +90,7 @@ std::string parenthesize(const std::string &name, std::initializer_list<Expr> ex
                },
                [](const Box<Grouping> &group) {
                  return parenthesize("group", {group->expr});
-               }
-      },
+               }},
       expr);
 }
 
@@ -103,5 +104,4 @@ std::string parenthesize(const std::string &name,
   res.append(")");
   return res;
 }
-}
-
+}  // namespace expr

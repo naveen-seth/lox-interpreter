@@ -9,9 +9,6 @@ using namespace token;
 
 export class Lox {
  public:
-  static void reportErr(std::uint32_t lineNum, std::uint32_t colNum,
-                        std::string_view errMsg);
-
   static void runFile(const std::filesystem::path &path) {
     std::ifstream ifs{path};
     auto source = std::string{std::istreambuf_iterator<char>{ifs},
@@ -30,15 +27,8 @@ export class Lox {
     std::println("AST printer singleton tests:");
     Expr expr1{Literal{Token{String{"Hello, world!"}}}};
     std::println("AST test1:{}", formatExpr(expr1));
-    Expr expr2{Binary{Literal{Token{Number{10}}},
-		     Token{Star{}},
-		     Literal{Token{Number{3.141}}}}};
+    Expr expr2{Binary{Literal{Token{Number{10}}}, Token{Star{}},
+                      Literal{Token{Number{3.141}}}}};
     std::println("AST test2:{}", formatExpr(expr2));
   }
 };
-
-void Lox::reportErr(std::uint32_t lineNum, std::uint32_t colNum,
-                    std::string_view errMsg) {
-  std::println(std::cerr, "Error at line {}, column {}:", lineNum, colNum);
-  std::print(std::cerr, "{}", errMsg);
-}
